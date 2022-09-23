@@ -1,0 +1,52 @@
+﻿@model Produit
+
+<form method="post" asp-action="SaveProduit">
+    <div class="border p-3 mt-4">
+       <div class="row pb-2">
+             <h2 class="text-primary">Creer Produit</h2>
+            <hr />
+       </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="mb-3">
+          <label asp-for="Designation"></label>
+          <input asp-for="Designation" class="form-control" />
+          <span asp-validation-for="Designation" class="text-danger"></span>
+        </div>
+
+         <div class="mb-3">
+          <label asp-for="Prix"></label>
+          <input asp-for="Prix" class="form-control" />
+          <span asp-validation-for="Prix" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+          <label asp-for="Quantite"></label>
+          <input asp-for="Quantite" class="form-control" />
+          <span asp-validation-for="Quantite" class="text-danger"></span>
+        </div>
+
+          <div class="mb-3">
+          <label asp-for="Categorie"></label>
+          <select asp-for="Id" class="form-select" aria-label="Default select example">
+                            @{
+                                foreach (MonAppCRUD.Models.Category cats in ViewBag.categories)//MonCatalogProduit.Models.Categorie
+                                        {
+                              <option value="@cats.Id">
+                                @cats.Name.ToString()
+                              </option>
+                    }
+                }
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:150px;">Save</button>
+        <a asp-controller="Produit" asp-action="Index" class="btn btn-secondary" style="width:150px;">Back to list</a>
+    </div>
+
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

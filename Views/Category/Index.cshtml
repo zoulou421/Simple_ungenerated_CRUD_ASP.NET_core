@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Category>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<partial name="_Notification" />
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Category List</h2>
+
+            @*AJOUT RECHERCHE FORMULAIRE*@
+            <div class="container">
+               <form method="get" asp-action="Index">
+                  <!--label>Mot clé:</label-->
+                  <input type="text" class="form-control" name="motCle"  value="@ViewBag.motCle"/>
+                  <button type="submit" class="btn btn-primary btn-sm">Search</button>
+               </form>
+            </div>
+        @*FIN AJOUT RECHERCHE FORMULAIRE*@
+
+        </div>
+         
+         <div class="col-6 text-end">
+            <a asp-controller="Category" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle"></i>&nbsp;Create new Category</a>
+        </div>
+    </div>
+    <br /><br />
+
+<table class="table table-bordered table-strîped" style="width:100%;">
+    <thead>
+        <th>Category Name</th>
+        <th>Display Order</th>
+        <th> </th>
+    </thead>
+
+    <tbody>
+        @foreach(var obj in Model)
+        {
+            <tr>
+                <td width="50%">
+                   @obj.Name
+                </td>
+
+                <td width="30%">
+                    @obj.DisplayOrder
+                </td>
+
+                <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i>Edit</a>
+                    </div>
+                </td>
+
+                 <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i>Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+      <div >
+           <ul class="nav nav-pills">
+                    @{
+                        
+                        for (int i=0;i<ViewBag.totalPages;i++ )
+                        {
+                            string className = "";
+                            if (i == ViewBag.currentPage)
+                            {
+                                className = "active";
+                            }
+                                <!--li class="@className"-->
+                                  <!--a  asp-controller="Category" asp-action="Index" asp-route-page="@i">@i</a-->
+                                <!--/li-->  
+                                <nav aria-label="...">
+                                    <ul class="pagination pagination-sm">
+                                       <li class="page-item @className" aria-current="page">
+                                       <span class="page-link">
+                                         <a  asp-controller="Category"  asp-route-motCle="ViewBag.motCle"
+                                         style="text-decoration: none;" asp-action="Index" asp-route-page="@i">@i</a>
+                                       </span>
+                                      </li>
+                                     </ul>
+                                </nav>
+
+                        }
+                   }
+           </ul>
+       </div>
+
+</div>
